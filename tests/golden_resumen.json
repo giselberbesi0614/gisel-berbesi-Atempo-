@@ -1,0 +1,548 @@
+{
+ "alta": {
+  "carga": {
+   "alta": true,
+   "horas_disponibles": 7.0,
+   "horas_pendientes": 14,
+   "mensaje": "Carga Alta (200%)",
+   "nivel": "Alta",
+   "porcentaje": 200
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 6,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 5,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 2,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 3,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 1,
+   "pendientes": 4,
+   "porcentaje": 20
+  },
+  "recomendaciones": [
+   {
+    "actividad_id": 1,
+    "dias_restantes": 1,
+    "fecha_limite": "2026-11-02",
+    "horas": 4,
+    "materia": "Diseño de Interfaces",
+    "nombre": "Prototipo de aplicación",
+    "resaltada": true
+   },
+   {
+    "actividad_id": 2,
+    "dias_restantes": 2,
+    "fecha_limite": "2026-11-03",
+    "horas": 2,
+    "materia": "Matemáticas",
+    "nombre": "Ejercicios de derivadas",
+    "resaltada": true
+   },
+   {
+    "actividad_id": 3,
+    "dias_restantes": 4,
+    "fecha_limite": "2026-11-05",
+    "horas": 5,
+    "materia": "Programación Web",
+    "nombre": "Entrega API REST",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 4,
+    "dias_restantes": 6,
+    "fecha_limite": "2026-11-07",
+    "horas": 3,
+    "materia": "Investigación",
+    "nombre": "Lectura y mapa conceptual",
+    "resaltada": false
+   }
+  ],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "baja": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 70.0,
+   "horas_pendientes": 14,
+   "mensaje": "Carga Baja (20%)",
+   "nivel": "Baja",
+   "porcentaje": 20
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 6,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 5,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 2,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 3,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 1,
+   "pendientes": 4,
+   "porcentaje": 20
+  },
+  "recomendaciones": [
+   {
+    "actividad_id": 1,
+    "dias_restantes": 1,
+    "fecha_limite": "2026-11-02",
+    "horas": 4,
+    "materia": "Diseño de Interfaces",
+    "nombre": "Prototipo de aplicación",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 2,
+    "dias_restantes": 2,
+    "fecha_limite": "2026-11-03",
+    "horas": 2,
+    "materia": "Matemáticas",
+    "nombre": "Ejercicios de derivadas",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 3,
+    "dias_restantes": 4,
+    "fecha_limite": "2026-11-05",
+    "horas": 5,
+    "materia": "Programación Web",
+    "nombre": "Entrega API REST",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 4,
+    "dias_restantes": 6,
+    "fecha_limite": "2026-11-07",
+    "horas": 3,
+    "materia": "Investigación",
+    "nombre": "Lectura y mapa conceptual",
+    "resaltada": false
+   }
+  ],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "demo": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 19.0,
+   "horas_pendientes": 14,
+   "mensaje": "Carga Media (74%)",
+   "nivel": "Media",
+   "porcentaje": 74
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 6,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 5,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 2,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 3,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 1,
+   "pendientes": 4,
+   "porcentaje": 20
+  },
+  "recomendaciones": [
+   {
+    "actividad_id": 1,
+    "dias_restantes": 1,
+    "fecha_limite": "2026-11-02",
+    "horas": 4,
+    "materia": "Diseño de Interfaces",
+    "nombre": "Prototipo de aplicación",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 2,
+    "dias_restantes": 2,
+    "fecha_limite": "2026-11-03",
+    "horas": 2,
+    "materia": "Matemáticas",
+    "nombre": "Ejercicios de derivadas",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 3,
+    "dias_restantes": 4,
+    "fecha_limite": "2026-11-05",
+    "horas": 5,
+    "materia": "Programación Web",
+    "nombre": "Entrega API REST",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 4,
+    "dias_restantes": 6,
+    "fecha_limite": "2026-11-07",
+    "horas": 3,
+    "materia": "Investigación",
+    "nombre": "Lectura y mapa conceptual",
+    "resaltada": false
+   }
+  ],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "materia_sin_actividades": {
+  "carga": {
+   "alta": true,
+   "horas_disponibles": 14.0,
+   "horas_pendientes": 14,
+   "mensaje": "Carga Alta (100%)",
+   "nivel": "Alta",
+   "porcentaje": 100
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 6,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 5,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 2,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 3,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   },
+   {
+    "color": "#123456",
+    "horas": 0,
+    "materia_id": 101,
+    "nombre": "Sin actividades"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 1,
+   "pendientes": 4,
+   "porcentaje": 20
+  },
+  "recomendaciones": [
+   {
+    "actividad_id": 1,
+    "dias_restantes": 1,
+    "fecha_limite": "2026-11-02",
+    "horas": 4,
+    "materia": "Diseño de Interfaces",
+    "nombre": "Prototipo de aplicación",
+    "resaltada": true
+   },
+   {
+    "actividad_id": 2,
+    "dias_restantes": 2,
+    "fecha_limite": "2026-11-03",
+    "horas": 2,
+    "materia": "Matemáticas",
+    "nombre": "Ejercicios de derivadas",
+    "resaltada": true
+   },
+   {
+    "actividad_id": 3,
+    "dias_restantes": 4,
+    "fecha_limite": "2026-11-05",
+    "horas": 5,
+    "materia": "Programación Web",
+    "nombre": "Entrega API REST",
+    "resaltada": false
+   },
+   {
+    "actividad_id": 4,
+    "dias_restantes": 6,
+    "fecha_limite": "2026-11-07",
+    "horas": 3,
+    "materia": "Investigación",
+    "nombre": "Lectura y mapa conceptual",
+    "resaltada": false
+   }
+  ],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "sin_actividades_con_horas": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 21.0,
+   "horas_pendientes": 0,
+   "mensaje": "Aún no tienes actividades pendientes",
+   "nivel": "Baja",
+   "porcentaje": 0
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 0,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 0,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 0,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 0,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 0,
+   "pendientes": 0,
+   "porcentaje": 0
+  },
+  "recomendaciones": [],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "sin_horas": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 0,
+   "horas_pendientes": 0,
+   "mensaje": "Registra tus horas disponibles para calcular tu carga",
+   "nivel": null,
+   "porcentaje": null
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 0,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 0,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 0,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 0,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 0,
+   "pendientes": 0,
+   "porcentaje": 0
+  },
+  "recomendaciones": [],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "todo_completado": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 19.0,
+   "horas_pendientes": 0,
+   "mensaje": "Aún no tienes actividades pendientes",
+   "nivel": "Baja",
+   "porcentaje": 0
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 6,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 5,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 2,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 3,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 5,
+   "pendientes": 0,
+   "porcentaje": 100
+  },
+  "recomendaciones": [],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ },
+ "vencida": {
+  "carga": {
+   "alta": false,
+   "horas_disponibles": 14.0,
+   "horas_pendientes": 2,
+   "mensaje": "Carga Baja (14%)",
+   "nivel": "Baja",
+   "porcentaje": 14
+  },
+  "horas_por_materia": [
+   {
+    "color": "#6C5CE7",
+    "horas": 0,
+    "materia_id": 1,
+    "nombre": "Diseño de Interfaces"
+   },
+   {
+    "color": "#00A6A6",
+    "horas": 0,
+    "materia_id": 2,
+    "nombre": "Programación Web"
+   },
+   {
+    "color": "#F08A5D",
+    "horas": 0,
+    "materia_id": 3,
+    "nombre": "Matemáticas"
+   },
+   {
+    "color": "#E85D75",
+    "horas": 0,
+    "materia_id": 4,
+    "nombre": "Investigación"
+   },
+   {
+    "color": "#654321",
+    "horas": 2,
+    "materia_id": 101,
+    "nombre": "Temporal"
+   }
+  ],
+  "hoy": "2026-11-01",
+  "progreso": {
+   "completadas": 0,
+   "pendientes": 1,
+   "porcentaje": 0
+  },
+  "recomendaciones": [
+   {
+    "actividad_id": 102,
+    "dias_restantes": -12,
+    "fecha_limite": "2026-10-20",
+    "horas": 2,
+    "materia": "Temporal",
+    "nombre": "Vencida",
+    "resaltada": false
+   }
+  ],
+  "semana": {
+   "fin": "2026-11-01",
+   "inicio": "2026-10-26"
+  }
+ }
+}
