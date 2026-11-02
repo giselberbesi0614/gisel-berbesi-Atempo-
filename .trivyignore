@@ -1,0 +1,2 @@
+# Exclusiones de Trivy. Cada línea necesita: ID, motivo y fecha de revisión.
+# (vacío: hoy no hay hallazgos excluidos; no se ignora ninguna vulnerabilidad)

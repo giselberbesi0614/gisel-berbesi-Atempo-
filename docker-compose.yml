@@ -1,0 +1,20 @@
+services:
+  atempo:
+    build: .
+    image: atempo:0.2.0
+    ports:
+      - "8000:8000"
+    environment:
+      ATEMPO_DB: ${ATEMPO_DB:-/data/atempo.db}
+    volumes:
+      - atempo_datos:/data
+    networks:
+      - atempo_red
+    restart: unless-stopped
+
+volumes:
+  atempo_datos:
+
+networks:
+  atempo_red:
+    driver: bridge

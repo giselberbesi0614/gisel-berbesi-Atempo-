@@ -1,0 +1,23 @@
+# Uso local: docker compose -f docker-compose.yml -f docker-compose.observabilidad.yml up -d --build
+services:
+  atempo:
+    environment:
+      ATEMPO_METRICAS: "1"
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./observabilidad/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - atempo_red
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_datos:/var/lib/grafana
+    networks:
+      - atempo_red
+volumes:
+  grafana_datos:
