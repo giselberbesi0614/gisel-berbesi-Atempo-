@@ -1,0 +1,26 @@
+# TYPE atempo_http_requests_total counter
+atempo_http_requests_total{method="GET",route="/api/v1/estado",status="200"} 1443
+atempo_http_requests_total{method="POST",route="/api/v1/actividades",status="201"} 2500
+# TYPE atempo_http_request_duration_ms histogram
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="5"} 428
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="10"} 708
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="25"} 1149
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="50"} 1648
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="100"} 2316
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="250"} 2500
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="500"} 2500
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="1000"} 2500
+atempo_http_request_duration_ms_bucket{route="/api/v1/actividades",le="+Inf"} 2500
+atempo_http_request_duration_ms_sum{route="/api/v1/actividades"} 99807.976
+atempo_http_request_duration_ms_count{route="/api/v1/actividades"} 2500
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="5"} 237
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="10"} 601
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="25"} 1127
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="50"} 1314
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="100"} 1432
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="250"} 1443
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="500"} 1443
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="1000"} 1443
+atempo_http_request_duration_ms_bucket{route="/api/v1/estado",le="+Inf"} 1443
+atempo_http_request_duration_ms_sum{route="/api/v1/estado"} 28559.249
+atempo_http_request_duration_ms_count{route="/api/v1/estado"} 1443
