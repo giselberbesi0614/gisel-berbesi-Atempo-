@@ -1,0 +1,13 @@
+"""Contrato de la fuente de datos (DIP): el dominio depende de esto, no de la implementación."""
+from __future__ import annotations
+
+from typing import Protocol
+
+from ..dominio.modelos import Actividad, Materia
+
+
+class FuenteDeDatos(Protocol):
+    def materias(self) -> list[Materia]: ...
+    def actividades(self) -> list[Actividad]: ...
+    def disponibilidad(self) -> dict[str, float]: ...
+    def horas_disponibles(self) -> float: ...
