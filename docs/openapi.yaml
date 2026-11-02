@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Atempo API
+  version: 0.2.0
+  description: >
+    Contrato de la API REST de Atempo (MVP con datos de demostración). Derivado del código v0.2.0;
+    el estado de una sesión anónima se identifica con la cookie HttpOnly atempo_sid.
+servers:
+  - url: http://localhost:5000
+security: []          # declaración explícita: hoy ningún endpoint exige autenticación (sin cuentas, DP-08)
+tags:
+  - name: Planificación académica
+  - name: Disponibilidad
+  - name: Carga académica
+  - name: Sesión
+paths:
+  /api/v1/estado:
+    get:
+      tags: [Carga académica]
+      summary: Estado completo de la sesión (materias, actividades, disponibilidad y resumen)
+      security: []
+      responses:
+        '200': {description: Estado actual, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+  /api/v1/materias:
+    post:
+      tags: [Planificación académica]
+      summary: Crear una materia
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/MateriaEntrada'}}}}
+      responses:
+        '201': {description: Materia creada; devuelve el estado, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+  /api/v1/materias/{id}:
+    parameters: [{$ref: '#/components/parameters/Id'}]
+    put:
+      tags: [Planificación académica]
+      summary: Reemplazar los datos de una materia
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/MateriaEntrada'}}}}
+      responses:
+        '200': {description: Materia actualizada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+        '404': {$ref: '#/components/responses/NoEncontrado'}
+    delete:
+      tags: [Planificación académica]
+      summary: Eliminar una materia
+      security: []
+      responses:
+        '200': {description: Materia eliminada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+        '404': {$ref: '#/components/responses/NoEncontrado'}
+  /api/v1/actividades:
+    post:
+      tags: [Planificación académica]
+      summary: Crear una actividad
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ActividadEntrada'}}}}
+      responses:
+        '201': {description: Actividad creada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+  /api/v1/actividades/{id}:
+    parameters: [{$ref: '#/components/parameters/Id'}]
+    put:
+      tags: [Planificación académica]
+      summary: Reemplazar los datos de una actividad
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ActividadEntrada'}}}}
+      responses:
+        '200': {description: Actividad actualizada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+        '404': {$ref: '#/components/responses/NoEncontrado'}
+    delete:
+      tags: [Planificación académica]
+      summary: Eliminar una actividad
+      security: []
+      responses:
+        '200': {description: Actividad eliminada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+        '404': {$ref: '#/components/responses/NoEncontrado'}
+  /api/v1/actividades/{id}/completada:
+    patch:
+      tags: [Planificación académica]
+      summary: Marcar una actividad como completada o pendiente
+      security: []
+      parameters: [{$ref: '#/components/parameters/Id'}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {type: object, required: [completada], properties: {completada: {type: boolean}}}}}
+      responses:
+        '200': {description: Estado actualizado, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+        '404': {$ref: '#/components/responses/NoEncontrado'}
+  /api/v1/disponibilidad:
+    put:
+      tags: [Disponibilidad]
+      summary: Reemplazar las horas disponibles por día (0 a 24 h)
+      security: []
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/Disponibilidad'}}}}
+      responses:
+        '200': {description: Disponibilidad guardada, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+        '400': {$ref: '#/components/responses/ErrorValidacion'}
+  /api/v1/reiniciar:
+    post:
+      tags: [Sesión]
+      summary: Restaurar los datos de demostración de la sesión
+      security: []
+      responses:
+        '200': {description: Datos restaurados, content: {application/json: {schema: {$ref: '#/components/schemas/Estado'}}}}
+  /salud:
+    get:
+      tags: [Sesión]
+      summary: Comprobación de salud (versión, persistencia y esquema)
+      security: []
+      responses:
+        '200':
+          description: Servicio activo
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [estado, version, persistencia]
+                properties:
+                  estado: {type: string, enum: [ok]}
+                  version: {type: string, example: 0.2.0}
+                  persistencia: {type: string, enum: [memoria, sqlite]}
+                  esquema: {type: integer, nullable: true}
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: {type: integer, minimum: 1}
+  responses:
+    ErrorValidacion:
+      description: Datos inválidos
+      content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}
+    NoEncontrado:
+      description: El recurso no existe
+      content: {application/json: {schema: {$ref: '#/components/schemas/Error'}}}
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties: {error: {type: string, example: El nombre de la materia es obligatorio}}
+    MateriaEntrada:
+      type: object
+      required: [nombre]
+      properties:
+        nombre: {type: string, maxLength: 80}
+        docente: {type: string}
+        color: {type: string, pattern: '^#[0-9A-Fa-f]{6}$'}
+    Materia:
+      allOf:
+        - $ref: '#/components/schemas/MateriaEntrada'
+        - type: object
+          required: [id]
+          properties: {id: {type: integer}}
+    ActividadEntrada:
+      type: object
+      required: [nombre, fecha_limite, horas_estimadas, materia_id]
+      properties:
+        nombre: {type: string}
+        fecha_limite: {type: string, format: date}
+        horas_estimadas: {type: number, minimum: 0.5}
+        materia_id: {type: integer}
+    Actividad:
+      allOf:
+        - $ref: '#/components/schemas/ActividadEntrada'
+        - type: object
+          required: [id, completada]
+          properties: {id: {type: integer}, completada: {type: boolean}}
+    Disponibilidad:
+      type: object
+      description: Horas por día de la semana; cada valor entre 0 y 24 (RN-02)
+      properties:
+        Lunes: {type: number, minimum: 0, maximum: 24}
+        Martes: {type: number, minimum: 0, maximum: 24}
+        Miércoles: {type: number, minimum: 0, maximum: 24}
+        Jueves: {type: number, minimum: 0, maximum: 24}
+        Viernes: {type: number, minimum: 0, maximum: 24}
+        Sábado: {type: number, minimum: 0, maximum: 24}
+        Domingo: {type: number, minimum: 0, maximum: 24}
+    Carga:
+      type: object
+      required: [nivel, porcentaje, horas_pendientes, horas_disponibles, mensaje]
+      properties:
+        nivel: {type: string, enum: [Baja, Media, Alta]}
+        porcentaje: {type: integer, minimum: 0}
+        horas_pendientes: {type: number}
+        horas_disponibles: {type: number}
+        alta: {type: boolean}
+        mensaje: {type: string}
+    Resumen:
+      type: object
+      required: [carga, progreso, recomendaciones, hoy]
+      properties:
+        carga: {$ref: '#/components/schemas/Carga'}
+        progreso:
+          type: object
+          properties: {completadas: {type: integer}, pendientes: {type: integer}, porcentaje: {type: integer}}
+        recomendaciones: {type: array, items: {type: object, required: [actividad_id, nombre, fecha_limite], properties: {actividad_id: {type: integer}, nombre: {type: string}, materia: {type: string}, fecha_limite: {type: string, format: date}, dias_restantes: {type: integer}, horas: {type: number}, resaltada: {type: boolean}}}}
+        horas_por_materia: {type: array, items: {type: object}}
+        semana: {type: object, properties: {inicio: {type: string, format: date}, fin: {type: string, format: date}}}
+        hoy: {type: string, format: date}
+    Estado:
+      type: object
+      required: [materias, actividades, disponibilidad, resumen]
+      properties:
+        materias: {type: array, items: {$ref: '#/components/schemas/Materia'}}
+        actividades: {type: array, items: {$ref: '#/components/schemas/Actividad'}}
+        disponibilidad: {$ref: '#/components/schemas/Disponibilidad'}
+        resumen: {$ref: '#/components/schemas/Resumen'}
