@@ -240,14 +240,14 @@ root.addEventListener("click", ev => {
   else if (d.a === "nueva-materia") { modal = {tipo:"materia"}; pintar(); }
   else if (d.a === "nueva-actividad") { if (!E.materias.length) { avisar("Crea primero una materia.", "error"); vista = "Mis materias"; } else modal = {tipo:"actividad"}; pintar(); }
   else if (d.a === "cerrar") { modal = null; pintar(); }
-  else if (d.a === "reiniciar") { if (confirm("¿Restablecer todos los datos de demostración?")) accion("POST", "/reiniciar", null, "Datos de demostración restablecidos."); }
+  else if (d.a === "reiniciar") { if (confirm("¿Restablecer todos los datos de demostración?")) void accion("POST", "/reiniciar", null, "Datos de demostración restablecidos."); }
   else if (d.filtro) { filtro = d.filtro; pintar(); }
-  else if (d.completar) accion("PATCH", `/actividades/${d.completar}/completada`, {completada:true}, "¡Actividad completada!");
-  else if (d.alternar) { const a = E.actividades.find(x => x.id == d.alternar); accion("PATCH", `/actividades/${a.id}/completada`, {completada:!a.completada}, a.completada ? "Actividad marcada como pendiente." : "¡Actividad completada!"); }
+  else if (d.completar) void accion("PATCH", `/actividades/${d.completar}/completada`, {completada:true}, "¡Actividad completada!");
+  else if (d.alternar) { const a = E.actividades.find(x => x.id == d.alternar); void accion("PATCH", `/actividades/${a.id}/completada`, {completada:!a.completada}, a.completada ? "Actividad marcada como pendiente." : "¡Actividad completada!"); }
   else if (d.editarAct) { modal = {tipo:"actividad", item:E.actividades.find(x => x.id == d.editarAct)}; pintar(); }
-  else if (d.borrarAct) { const a = E.actividades.find(x => x.id == d.borrarAct); if (confirm(`¿Eliminar la actividad “${a.nombre}”?`)) accion("DELETE", `/actividades/${a.id}`, null, "Actividad eliminada."); }
+  else if (d.borrarAct) { const a = E.actividades.find(x => x.id == d.borrarAct); if (confirm(`¿Eliminar la actividad “${a.nombre}”?`)) void accion("DELETE", `/actividades/${a.id}`, null, "Actividad eliminada."); }
   else if (d.editarMateria) { modal = {tipo:"materia", item:materia(+d.editarMateria)}; pintar(); }
-  else if (d.borrarMateria) { const m = materia(+d.borrarMateria); if (confirm(`¿Eliminar la materia “${m.nombre}”?`)) accion("DELETE", `/materias/${m.id}`, null, "Materia eliminada."); }
+  else if (d.borrarMateria) { const m = materia(+d.borrarMateria); if (confirm(`¿Eliminar la materia “${m.nombre}”?`)) void accion("DELETE", `/materias/${m.id}`, null, "Materia eliminada."); }
   else if (d.mes) { cal.mes += +d.mes; if (cal.mes < 0) { cal.mes = 11; cal.anio--; } if (cal.mes > 11) { cal.mes = 0; cal.anio++; } cal.dia = 1; pintar(); }
   else if (d.dia) { cal.dia = +d.dia; pintar(); }
   else if (d.delta) { const i = root.querySelector(`input[name="${d.diaD}"]`); i.value = Math.max(0, Math.min(24, (+i.value || 0) + +d.delta)); }
@@ -257,18 +257,18 @@ root.addEventListener("submit", ev => {
   ev.preventDefault();
   const f = ev.target, v = n => f.elements[n]?.value ?? "";
   if (f.id === "form-disp") {
-    const cuerpo = {}; for (const dia of DIAS) cuerpo[dia] = v(dia) === "" ? NaN : Number(v(dia));
+    const cuerpo = {}; for (const dia of DIAS) cuerpo[dia] = v(dia) === "" ? Number.NaN : Number(v(dia));
     if (Object.values(cuerpo).some(x => Number.isNaN(x) || x < 0 || x > 24)) { avisar("Las horas deben estar entre 0 y 24.", "error"); pintar(); return; }
-    accion("PUT", "/disponibilidad", cuerpo, "Disponibilidad guardada.");
+    void accion("PUT", "/disponibilidad", cuerpo, "Disponibilidad guardada.");
   } else if (f.id === "form-materia") {
     const cuerpo = {nombre:v("nombre").trim(), docente:v("docente").trim(), color:modal.color || modal.item?.color || COLORES[0]};
     if (!cuerpo.nombre) { modal.item = {...(modal.item||{}), ...cuerpo}; modal.error = "El nombre de la materia es obligatorio"; pintar(); return; }
-    const id = modal.item?.id; accion(id ? "PUT" : "POST", id ? `/materias/${id}` : "/materias", cuerpo, id ? "Materia actualizada." : "Materia creada con éxito.");
+    const id = modal.item?.id; void accion(id ? "PUT" : "POST", id ? `/materias/${id}` : "/materias", cuerpo, id ? "Materia actualizada." : "Materia creada con éxito.");
   } else if (f.id === "form-act") {
     const cuerpo = {nombre:v("nombre").trim(), materia_id:Number(v("materia_id")), fecha_limite:v("fecha_limite"), horas_estimadas:v("horas_estimadas") === "" ? null : Number(v("horas_estimadas"))};
     const err = !cuerpo.nombre ? "Falta el campo: nombre de la actividad." : !cuerpo.fecha_limite ? "Falta el campo: fecha de entrega." : cuerpo.horas_estimadas === null ? "Falta el campo: horas estimadas." : !(cuerpo.horas_estimadas > 0) ? "Las horas estimadas deben ser mayores que 0." : "";
     if (err) { modal.item = {...(modal.item||{}), ...cuerpo}; modal.error = err; pintar(); return; }
-    const id = modal.item?.id; accion(id ? "PUT" : "POST", id ? `/actividades/${id}` : "/actividades", cuerpo, id ? "Actividad actualizada." : "Actividad creada con éxito.");
+    const id = modal.item?.id; void accion(id ? "PUT" : "POST", id ? `/actividades/${id}` : "/actividades", cuerpo, id ? "Actividad actualizada." : "Actividad creada con éxito.");
   }
 });
 document.addEventListener("keydown", ev => { if (ev.key === "Escape" && modal) { modal = null; pintar(); } });
