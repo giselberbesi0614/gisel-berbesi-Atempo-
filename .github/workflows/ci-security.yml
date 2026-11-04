@@ -30,7 +30,7 @@ jobs:
             --ignorefile /src/.trivyignore --format json --output /src/trivy.json /src
       - name: Guardar el informe como artefacto privado del repositorio
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: informe-trivy
           path: trivy.json
