@@ -1,0 +1,42 @@
+name: Deploy
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    # solo si el CI terminó en verde: sin CI verde no hay despliegue
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    env:
+      IMAGEN: ghcr.io/${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Iniciar sesión en GHCR (sin contraseñas escritas)
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Construir y publicar la imagen con la etiqueta del commit (inmutable)
+        run: |
+          docker build -t "$IMAGEN:${{ github.event.workflow_run.head_sha }}" .
+          docker push "$IMAGEN:${{ github.event.workflow_run.head_sha }}"
+      - name: Pedir el despliegue a Render (webhook secreto)
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+      - name: Healthcheck posterior al despliegue
+        run: scripts/healthcheck.sh "${{ vars.URL_PUBLICA }}" 12 10
+      - name: Política de rollback si el healthcheck falla
+        if: failure()
+        run: |
+          {
+            echo "### Despliegue fallido: aplicar rollback"
+            echo "Versión con fallo: ${{ github.event.workflow_run.head_sha }}"
+            echo "Acción: en Render, volver al despliegue anterior que estaba sano; luego revisar el error."
+          } >> "$GITHUB_STEP_SUMMARY"
