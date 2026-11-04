@@ -1,7 +1,0 @@
-sonar.organization=giselberbesi0614
-sonar.projectKey=giselberbesi0614_gisel-berbesi-Atempo
-sonar.sources=atempo
-sonar.tests=tests
-sonar.python.version=3.12
-sonar.python.coverage.reportPaths=coverage.xml
-sonar.sourceEncoding=UTF-8
