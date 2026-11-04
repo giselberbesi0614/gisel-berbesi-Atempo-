@@ -29,7 +29,7 @@ class TestApi(unittest.TestCase):
 
     def test_rn01_incompleta(self):
         r = self.c.post("/api/v1/actividades", json={"nombre": "", "fecha_limite": "2026-12-01",
-                                                      "horas_estimadas": 3, "materia_id": 1})
+                                                     "horas_estimadas": 3, "materia_id": 1})
         self.assertEqual(r.status_code, 400)
         r = self.c.post("/api/v1/actividades", json={"nombre": "x" * 5, "materia_id": 1})
         self.assertEqual(r.status_code, 400)
