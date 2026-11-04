@@ -30,7 +30,8 @@ class TestApiSobreSQLite(_Cierra, test_api.TestApi):
     def test_sesiones_aisladas(self):                      # dos clientes sobre la MISMA base
         repo = self.nuevo(":memory:")
         a, b = crear_app(repo).test_client(), crear_app(repo).test_client()
-        a.get("/api/v1/estado"); b.get("/api/v1/estado")
+        a.get("/api/v1/estado")
+        b.get("/api/v1/estado")
         a.delete("/api/v1/actividades/1")
         self.assertEqual(len(a.get("/api/v1/estado").get_json()["actividades"]), 4)
         self.assertEqual(len(b.get("/api/v1/estado").get_json()["actividades"]), 5)
@@ -66,12 +67,15 @@ class TestPersistencia(_Cierra, unittest.TestCase):
 
     def test_esquema_mas_nuevo_se_rechaza(self):
         self.nuevo(self.ruta).cerrar()
-        con = sqlite3.connect(self.ruta); con.execute("PRAGMA user_version = 99"); con.close()
+        con = sqlite3.connect(self.ruta)
+        con.execute("PRAGMA user_version = 99")
+        con.close()
         with self.assertRaises(RuntimeError):
             self.nuevo(self.ruta)
 
     def test_rechazo_hace_rollback(self):
-        r = self.nuevo(":memory:"); _, s = r.obtener(None)
+        r = self.nuevo(":memory:")
+        _, s = r.obtener(None)
         antes = s.actividades()
         with self.assertRaises(ErrorDeDominio):
             s.guardar_actividad({**ACT, "nombre": ""})
@@ -80,17 +84,23 @@ class TestPersistencia(_Cierra, unittest.TestCase):
         self.assertEqual(antes, s.actividades())
 
     def test_restricciones_de_la_base(self):
-        r = self.nuevo(":memory:"); sid, s = r.obtener(None)
+        r = self.nuevo(":memory:")
+        sid, s = r.obtener(None)
         with self.assertRaises(sqlite3.IntegrityError):                  # la base también defiende RN-02
             r.con.execute("INSERT INTO disponibilidad VALUES (?, 'Lunes', 25)", (sid,))
 
     def test_concurrencia_sin_perdidas(self):
-        r = self.nuevo(self.ruta); _, s = r.obtener(None)
+        r = self.nuevo(self.ruta)
+        _, s = r.obtener(None)
+
         def trabajo():
             for _ in range(20):
                 s.guardar_actividad(ACT)
         hilos = [threading.Thread(target=trabajo) for _ in range(6)]
-        [h.start() for h in hilos]; [h.join() for h in hilos]
+        for h in hilos:
+            h.start()
+        for h in hilos:
+            h.join()
         ids = [a.id for a in s.actividades()]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(len(ids), 5 + 6 * 20)
