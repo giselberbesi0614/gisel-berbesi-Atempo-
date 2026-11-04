@@ -77,7 +77,7 @@ class TestPA(unittest.TestCase):
         c = crear_app(GestorDeSesiones()).test_client()
         for i in range(50):
             c.post("/api/v1/actividades", json={"nombre": f"Act {i}", "materia_id": 1,
-                                                  "fecha_limite": "2026-11-20", "horas_estimadas": 1})
+                                                "fecha_limite": "2026-11-20", "horas_estimadas": 1})
         tiempos = []
         for _ in range(5):
             t = time.perf_counter()
