@@ -13,8 +13,8 @@ concurrency:
 
 jobs:
   desplegar:
-    # solo si el CI terminó en verde: sin CI verde no hay despliegue
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # solo si el CI terminó en verde y vino de este mismo repositorio (no de una bifurcación)
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository }}
     runs-on: ubuntu-latest
     env:
       IMAGEN: ghcr.io/${{ github.repository }}
