@@ -1,0 +1,36 @@
+name: Seguridad
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: SAST con Semgrep (falla ante hallazgos de severidad ERROR)
+        run: |
+          pip install semgrep
+          semgrep scan --config p/python --severity ERROR --error atempo
+
+  sca-y-secretos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: SCA y secretos con Trivy (falla ante vulnerabilidades críticas o altas)
+        run: |
+          docker run --rm -v "$PWD:/src" aquasec/trivy:latest fs \
+            --scanners vuln,secret --severity CRITICAL,HIGH --exit-code 1 \
+            --ignorefile /src/.trivyignore --format json --output /src/trivy.json /src
+      - name: Guardar el informe como artefacto privado del repositorio
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-trivy
+          path: trivy.json
