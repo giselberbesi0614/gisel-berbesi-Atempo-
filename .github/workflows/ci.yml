@@ -1,0 +1,73 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Estilo (flake8)
+        run: flake8 atempo tests wsgi.py
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: "Pruebas con cobertura (Quality Gate: dominio y servicios >= 80 %)"
+        run: |
+          coverage run --source=atempo -m unittest discover -s tests
+          coverage report --include="atempo/dominio/*,atempo/servicios/*" --fail-under=80
+          coverage xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cobertura
+          path: coverage.xml
+
+  analysis:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: cobertura
+      - name: Análisis estático (SonarQube) con Quality Gate bloqueante
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: -Dsonar.qualitygate.wait=true
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Construir la imagen (artefacto con la etiqueta del commit)
+        run: docker build -t atempo:${{ github.sha }} .
+      - name: Prueba de humo del contenedor
+        run: |
+          docker run -d --name atempo -p 8000:8000 atempo:${{ github.sha }}
+          sleep 5
+          curl -fsS http://127.0.0.1:8000/salud
