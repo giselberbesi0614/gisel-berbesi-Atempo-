@@ -53,7 +53,7 @@ jobs:
         with:
           name: cobertura
       - name: Análisis estático (SonarQube) con Quality Gate bloqueante
-        uses: SonarSource/sonarqube-scan-action@v7
+        uses: SonarSource/sonarqube-scan-action@v8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
