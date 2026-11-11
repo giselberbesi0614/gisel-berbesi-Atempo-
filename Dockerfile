@@ -1,11 +1,11 @@
 # ---- Etapa 1: construcción (instala las dependencias en un prefijo aparte) ----
-FROM python:3.12-slim AS builder
+FROM python:3.15-slim AS builder
 WORKDIR /build
 COPY requirements.txt .
 RUN pip install --no-cache-dir --prefix=/instalado -r requirements.txt
 
 # ---- Etapa 2: imagen final, mínima y sin privilegios ----
-FROM python:3.12-slim
+FROM python:3.15-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     ATEMPO_DB=/data/atempo.db \
